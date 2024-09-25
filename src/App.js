@@ -1,6 +1,7 @@
 import { Container, Grid } from "@mui/material";
 import React from "react";
-import './App.css';
+import "./App.css";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
@@ -10,19 +11,30 @@ import Resume from "./pages/Resume/Resume";
 
 function App() {
   return (
-    <Container>
-      <Grid container>
-        <Grid item xs={12} sm={12} lg={3} md={4} style={{backgroundColor: "blue"}}>
-          <Profile />
+    <Router>
+      <Container>
+        <Grid container>
+          <Grid
+            item
+            xs={12}
+            sm={12}
+            lg={3}
+            md={4}
+            style={{ backgroundColor: "blue" }}
+          >
+            <Profile />
+          </Grid>
+          <Grid item xs style={{ backgroundColor: "red" }}>
+            <Header />
+            <Routes>
+              <Route path="/portfolio" element={<Portfolio />} />
+              <Route path="/" element={<Resume />} />
+            </Routes>
+            <Footer />
+          </Grid>
         </Grid>
-        <Grid item xs={12} sm={12} lg={9} md={8} style={{ backgroundColor: "red" }}>
-          <Header />
-          <Portfolio />
-          <Resume />
-          <Footer />
-        </Grid>
-      </Grid>
-    </Container>
+      </Container>
+    </Router>
   );
 }
 
