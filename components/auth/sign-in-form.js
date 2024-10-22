@@ -2,22 +2,20 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
-import { emailSignUp, emailSignIn, getSession } from "@/lib/supabase";
+import { emailSignIn, getSession } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 
 const defaultFormFields = {
-    displayName: '',
     email: '',
-    password: '',
-    confirmPassword: ''
+    password: ''
 }
 
-const SignUpForm = () => {
+const SignInForm = () => {
     const [formFields, setFormFields] = useState(defaultFormFields);
-    const {displayName, email, password, confirmPassword} = formFields;
+    const {email, password} = formFields;
     const router = useRouter();
     const { toast } = useToast();
     const [mounted, setMounted] = useState(false);
@@ -32,21 +30,12 @@ const SignUpForm = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        
-        if (password !== confirmPassword) {
-            toast({
-                title: "Error",
-                description: "Passwords do not match",
-                variant: "destructive",
-            });
-            return;
-        }
 
         try {
-            const signInData = await emailSignUp(email, password, displayName);
+            const signInData = await emailSignIn(email, password);
             toast({
                 title: "Success",
-                description: "Account created successfully and signed in.",
+                description: "Signed in successfully.",
             });
 
             resetFormFields();
@@ -73,16 +62,12 @@ const SignUpForm = () => {
     return (
         <Card className="w-[350px]">
             <CardHeader>
-                <CardTitle>Sign Up</CardTitle>
-                <CardDescription>Create a new account</CardDescription>
+                <CardTitle>Sign In</CardTitle>
+                <CardDescription>Access your account</CardDescription>
             </CardHeader>
             <CardContent>
                 <form onSubmit={handleSubmit}>
                     <div className="grid w-full items-center gap-4">
-                        <div className="flex flex-col space-y-1.5">
-                            <Label htmlFor="displayName">Display Name</Label>
-                            <Input id="displayName" name="displayName" value={displayName} onChange={handleChange} required />
-                        </div>
                         <div className="flex flex-col space-y-1.5">
                             <Label htmlFor="email">Email</Label>
                             <Input id="email" name="email" type="email" value={email} onChange={handleChange} required />
@@ -91,13 +76,9 @@ const SignUpForm = () => {
                             <Label htmlFor="password">Password</Label>
                             <Input id="password" name="password" type="password" value={password} onChange={handleChange} required />
                         </div>
-                        <div className="flex flex-col space-y-1.5">
-                            <Label htmlFor="confirmPassword">Confirm Password</Label>
-                            <Input id="confirmPassword" name="confirmPassword" type="password" value={confirmPassword} onChange={handleChange} required />
-                        </div>
                     </div>
                     <CardFooter className="flex justify-between mt-4">
-                        <Button type="submit">Sign Up</Button>
+                        <Button type="submit">Sign In</Button>
                     </CardFooter>
                 </form>
             </CardContent>
@@ -105,4 +86,4 @@ const SignUpForm = () => {
     )
 }
 
-export default SignUpForm;
+export default SignInForm;
