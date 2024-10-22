@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
-import { supabase, emailSignUp } from "@/lib/supabase";
+import { emailSignUp, emailSignIn, getSession } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -43,21 +43,26 @@ const SignUpForm = () => {
         }
 
         try {
-            const { data } = await emailSignUp(email, password, displayName);
-            console.log(data);
+            const signInData = await emailSignUp(email, password, displayName);
+            console.log("Sign up and sign in successful:", signInData);
+
             toast({
                 title: "Success",
-                description: "Account created successfully. Please check your email for verification.",
+                description: "Account created successfully and signed in.",
             });
 
             resetFormFields();
-            if (mounted) {
-                router.push("/");
+            
+            // Get the session and redirect
+            const session = await getSession();
+            if (session && mounted) {
+                router.push(`/${session.user.user_metadata.display_name}`);
             }
         } catch (error) {
+            console.error("Error during sign up:", error);
             toast({
                 title: "Error",
-                description: error.message,
+                description: error.message || "An unexpected error occurred",
                 variant: "destructive",
             });
         }
