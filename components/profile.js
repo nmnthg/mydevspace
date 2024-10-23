@@ -35,7 +35,7 @@ function Profile({ user }) {
        {/* Display Resume */}
        {user.resume && (
         <div className="resume-section">
-          <h3 className="text-xl font-semibold mb-2">Resume:</h3>
+          <h3 className="text-xl font-semibold mb-2">Resume</h3>
           <div style={{ height: '300px', width: '400px', border: '1px solid #ddd', overflow: 'hidden' }}>
             <Worker workerUrl={`https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js`}>
               <Viewer
