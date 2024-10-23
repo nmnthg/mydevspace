@@ -20,15 +20,6 @@ const SignUpForm = () => {
     const {displayName, email, password, confirmPassword} = formFields;
     const router = useRouter();
     const { toast } = useToast();
-    const [mounted, setMounted] = useState(false);
-
-    useEffect(() => {
-        setMounted(true);
-    }, []);
-
-    const resetFormFields = () => {
-        setFormFields(defaultFormFields);
-    }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -43,19 +34,19 @@ const SignUpForm = () => {
         }
 
         try {
-            const signInData = await emailSignUp(email, password, displayName);
+            const signUpData = await emailSignUp(email, password, displayName);
             toast({
                 title: "Success",
                 description: "Account created successfully and signed in.",
             });
-
-            resetFormFields();
             
-            // Get the session and redirect
-            const session = await getSession();
-            if (session && mounted) {
-                router.push(`/${session.user.user_metadata.display_name}`);
+            if (signUpData.user?.user_metadata?.display_name) {
+                router.push(`/${signUpData.user.user_metadata.display_name}`);
+            } else {
+                // Fallback if display_name is not available
+                router.push('/dashboard');
             }
+
         } catch (error) {
             toast({
                 title: "Error",

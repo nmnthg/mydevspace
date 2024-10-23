@@ -18,15 +18,6 @@ const SignInForm = () => {
     const {email, password} = formFields;
     const router = useRouter();
     const { toast } = useToast();
-    const [mounted, setMounted] = useState(false);
-
-    useEffect(() => {
-        setMounted(true);
-    }, []);
-
-    const resetFormFields = () => {
-        setFormFields(defaultFormFields);
-    }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -38,12 +29,11 @@ const SignInForm = () => {
                 description: "Signed in successfully.",
             });
 
-            resetFormFields();
-            
-            // Get the session and redirect
-            const session = await getSession();
-            if (session && mounted) {
-                router.push(`/${session.user.user_metadata.display_name}`);
+            if (signInData.user?.user_metadata?.display_name) {
+                router.push(`/${signInData.user.user_metadata.display_name}`);
+            } else {
+                // Fallback if display_name is not available
+                router.push('/dashboard');
             }
         } catch (error) {
             toast({
@@ -70,11 +60,11 @@ const SignInForm = () => {
                     <div className="grid w-full items-center gap-4">
                         <div className="flex flex-col space-y-1.5">
                             <Label htmlFor="email">Email</Label>
-                            <Input id="email" name="email" type="email" value={email} onChange={handleChange} required />
+                            <Input id="sign-in-email" name="email" type="email" value={email} onChange={handleChange} required />
                         </div>
                         <div className="flex flex-col space-y-1.5">
                             <Label htmlFor="password">Password</Label>
-                            <Input id="password" name="password" type="password" value={password} onChange={handleChange} required />
+                            <Input id="sign-in-password" name="password" type="password" value={password} onChange={handleChange} required />
                         </div>
                     </div>
                     <CardFooter className="flex justify-between mt-4">
