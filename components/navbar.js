@@ -5,19 +5,22 @@ import Link from 'next/link';
 import { Button } from "@/components/ui/button"; 
 import { signOut } from '@/lib/supabase';
 import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
   const { user } = useUser();
   const [mounted, setMounted] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     setMounted(true);
-    console.log(user);
   }, []);
 
   if (!mounted) {
     return null; // or a loading placeholder
   }
+
+  const isEditPage = pathname.endsWith('/edit');
 
   return (
     <div className="flex justify-between items-center p-4 bg-black text-white">
@@ -28,7 +31,7 @@ export default function Navbar() {
       </div>
 
       <div className="flex items-center space-x-4 text-black">
-        {user && (
+        {user && !isEditPage && (
           <Button asChild variant="outline">
             <Link href={`/${user.user_metadata.display_name}/edit`}>
               Edit
