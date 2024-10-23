@@ -2,44 +2,34 @@
 import React from 'react'
 import { useParams } from 'next/navigation'
 import { useState, useEffect } from 'react';
-import { supabase } from '@/lib/supabase';
+import { getUser, getProjects } from '@/lib/supabase';
+import Profile from '@/components/profile';
 
 function ProfilePage() {
   const params = useParams();
   const [user, setUser] = useState(null);
+  const [projects, setProjects] = useState(null);
 
   useEffect(() => {
-    const fetchUser = async () => {
+    const fetchData = async () => {
       try {
-        // Query the Users table for the matching display_name
-        const { data, error } = await supabase
-          .from('Users')
-          .select('*')
-          .eq('display_name', params.display_name)
-
-        if (error) throw error;
-
-        // Check if any user was found
-        if (data && data.length > 0) {
-          setUser(data[0]);
-          console.log(data[0]);
-        } else {
-          console.log(`user ${params.display_name} not found`);
-          setUser(null);
-        }
+        const user = await getUser(params.display_name);
+        setUser(user);
+        const projects = await getProjects(params.display_name);
+        setProjects(projects);
       } catch (error) {
-        console.error('Error fetching user:', error.message);
+        console.error('Error fetching data', error.message);
         setUser(null);
+        setProjects(null);
       }
     };
 
-    fetchUser();
+    fetchData();
   }, [params.display_name]);
 
+
   return (
-    <div>
-      This is the profile page for {params.display_name}
-    </div>
+    <Profile user={user} />
   )
 }
 
