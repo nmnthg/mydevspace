@@ -2,10 +2,11 @@
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
-import { uploadProfile, getUser } from "@/lib/supabase";
+import { updateProfile, getUser } from "@/lib/supabase";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { toast, useToast } from "@/hooks/use-toast";
 
 function EditProfile({ display_name }) {
   const [user, setUser] = useState(null);
@@ -14,6 +15,7 @@ function EditProfile({ display_name }) {
   const [github, setGithub] = useState(null);
   const [linkedin, setLinkedin] = useState(null);
   const [file, setFile] = useState(null);
+  const { toast } = useToast();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,20 +29,30 @@ function EditProfile({ display_name }) {
         setGithub(user.github);
         setLinkedin(user.linkedin);
       } catch (error) {
-        console.error("Error fetching data", error.message);
+        console.error(error.message);
       }
     };
     fetchData();
   }, [display_name]);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      uploadProfile({ name, title, github, linkedin });
+      await updateProfile({ name, title, github, linkedin, display_name });
+      setName(name);
+      setTitle(title);
+      setGithub(github);
+      setLinkedin(linkedin);
+      toast({
+        title: "Success",
+        description: "User profile updated successfully",
+      });
     } catch (error) {
       console.log(error.message);
     }
   };
+
+  const userExists = user !== null;
 
   return (
     <div className="container mx-auto mt-10 p-4">
@@ -58,7 +70,7 @@ function EditProfile({ display_name }) {
                   id="name"
                   type="text"
                   onChange={(e) => setName(e.target.value)}
-                  defaultValue={user ? user.name : ''}
+                  defaultValue={userExists ? user.name : ''}
                   required
                 />
               </div>
@@ -68,7 +80,7 @@ function EditProfile({ display_name }) {
                   id="title"
                   type="text"
                   onChange={(e) => setTitle(e.target.value)}
-                  defaultValue={user ? user.title : ''}
+                  defaultValue={userExists ? user.title : ''}
                   required
                 />
               </div>
@@ -78,7 +90,7 @@ function EditProfile({ display_name }) {
                   id="github"
                   type="url"
                   onChange={(e) => setGithub(e.target.value)}
-                  defaultValue={user ? user.github : ''}
+                  defaultValue={userExists ? user.github : ''}
                   required
                 />
               </div>
@@ -88,7 +100,7 @@ function EditProfile({ display_name }) {
                   id="linkedin"
                   type="url"
                   onChange={(e) => setLinkedin(e.target.value)}
-                  defaultValue={user ? user.linkedin : ''}
+                  defaultValue={userExists ? user.linkedin : ''}
                   required
                 />
               </div>
