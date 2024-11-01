@@ -44,7 +44,7 @@ export default function Navbar() {
             Sign Out
           </Button>
         ) : (
-          <Button asChild>
+          <Button asChild variant="outline">
             <Link href="/auth">
               Sign In
             </Link>

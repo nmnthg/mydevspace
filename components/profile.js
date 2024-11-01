@@ -9,6 +9,10 @@ function Profile({ user }) {
     return <div className="container mx-auto mt-10 p-4">Loading user profile...</div>;
   }
 
+  if (!user.name || !user.title || !user.resume) {
+    return <div className="container mx-auto mt-10 p-4">Missing user information</div>;
+  }
+
   return (
     <div className="container mx-auto mt-10 p-4">
       <h1 className="text-4xl font-bold mb-4">{user.name}</h1>

@@ -4,6 +4,9 @@ import { UserProvider } from "@/context/user.context";
 
 export const metadata = {
   title: "MyDevSpace",
+  icons: {
+    icon: '@\public\logo.png'
+  }
 };
 
 export default function RootLayout({ children }) {
