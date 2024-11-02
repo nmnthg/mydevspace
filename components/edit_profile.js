@@ -2,8 +2,15 @@
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
-import { updateProfile, getUser } from "@/lib/supabase";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
+import { updateProfile, getUser, uploadResume } from "@/lib/supabase";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast, useToast } from "@/hooks/use-toast";
@@ -14,20 +21,20 @@ function EditProfile({ display_name }) {
   const [title, setTitle] = useState(null);
   const [github, setGithub] = useState(null);
   const [linkedin, setLinkedin] = useState(null);
+  const [resume, setResume] = useState(null);
   const [file, setFile] = useState(null);
   const { toast } = useToast();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("getting user");
         const user = await getUser(display_name);
-        console.log("got user");
         setUser(user);
         setName(user.name);
         setTitle(user.title);
         setGithub(user.github);
         setLinkedin(user.linkedin);
+        setResume(user.resume);
       } catch (error) {
         console.error(error.message);
       }
@@ -37,12 +44,22 @@ function EditProfile({ display_name }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log(user.display_name);
     try {
-      await updateProfile({ name, title, github, linkedin, display_name });
+      const newResumeUrl = await uploadResume(file, user.display_name);
+      await updateProfile({
+        name,
+        title,
+        github,
+        linkedin,
+        newResumeUrl,
+        display_name,
+      });
       setName(name);
       setTitle(title);
       setGithub(github);
       setLinkedin(linkedin);
+      setResume(newResumeUrl);
       toast({
         title: "Success",
         description: "User profile updated successfully",
@@ -70,7 +87,7 @@ function EditProfile({ display_name }) {
                   id="name"
                   type="text"
                   onChange={(e) => setName(e.target.value)}
-                  defaultValue={userExists ? user.name : ''}
+                  defaultValue={userExists ? user.name : ""}
                   required
                 />
               </div>
@@ -80,7 +97,7 @@ function EditProfile({ display_name }) {
                   id="title"
                   type="text"
                   onChange={(e) => setTitle(e.target.value)}
-                  defaultValue={userExists ? user.title : ''}
+                  defaultValue={userExists ? user.title : ""}
                   required
                 />
               </div>
@@ -90,7 +107,7 @@ function EditProfile({ display_name }) {
                   id="github"
                   type="url"
                   onChange={(e) => setGithub(e.target.value)}
-                  defaultValue={userExists ? user.github : ''}
+                  defaultValue={userExists ? user.github : ""}
                   required
                 />
               </div>
@@ -100,7 +117,7 @@ function EditProfile({ display_name }) {
                   id="linkedin"
                   type="url"
                   onChange={(e) => setLinkedin(e.target.value)}
-                  defaultValue={userExists ? user.linkedin : ''}
+                  defaultValue={userExists ? user.linkedin : ""}
                   required
                 />
               </div>
