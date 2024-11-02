@@ -14,7 +14,7 @@ function Profile({ user }) {
   }
 
   return (
-    <div className="container mx-auto mt-10 p-4">
+    <div className="container mt-10 pr-4">
       <h1 className="text-4xl font-bold mb-4">{user.name}</h1>
       <h2 className="text-2xl mb-4">{user.title}</h2>
 

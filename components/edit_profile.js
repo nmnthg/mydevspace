@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { toast, useToast } from "@/hooks/use-toast";
+import { useToast } from "@/hooks/use-toast";
 
 function EditProfile({ display_name }) {
   const [user, setUser] = useState(null);
@@ -21,7 +21,6 @@ function EditProfile({ display_name }) {
   const [title, setTitle] = useState(null);
   const [github, setGithub] = useState(null);
   const [linkedin, setLinkedin] = useState(null);
-  const [resume, setResume] = useState(null);
   const [file, setFile] = useState(null);
   const { toast } = useToast();
 
@@ -34,7 +33,6 @@ function EditProfile({ display_name }) {
         setTitle(user.title);
         setGithub(user.github);
         setLinkedin(user.linkedin);
-        setResume(user.resume);
       } catch (error) {
         console.error(error.message);
       }
@@ -44,7 +42,6 @@ function EditProfile({ display_name }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(user.display_name);
     try {
       const newResumeUrl = await uploadResume(file, user.display_name);
       await updateProfile({
@@ -59,7 +56,6 @@ function EditProfile({ display_name }) {
       setTitle(title);
       setGithub(github);
       setLinkedin(linkedin);
-      setResume(newResumeUrl);
       toast({
         title: "Success",
         description: "User profile updated successfully",
