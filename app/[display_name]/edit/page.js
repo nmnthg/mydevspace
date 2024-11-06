@@ -1,7 +1,8 @@
 'use client';
 import React from 'react'
 import { useUser } from '@/context/user.context';
-import EditProfile from '@/components/edit_profile';
+import EditProfile from '@/components/edit/edit_profile';
+import EditProjects from '@/components/edit/edit_projects';
 
 const EditPage = () => {
   const { user } = useUser()
@@ -14,7 +15,10 @@ const EditPage = () => {
   
 
   return (
-    <EditProfile display_name={user.user_metadata.display_name} />
+    <div>
+      <EditProfile display_name={user.user_metadata.display_name} />
+      <EditProjects display_name={user.user_metadata.display_name} />
+    </div>
   )
 }
 

@@ -38,12 +38,19 @@ function EditProfile({ display_name }) {
       }
     };
     fetchData();
-  }, [display_name]);
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (!user) {
+      toast({
+        title: "Error",
+        description: "User data is not available.",
+      });
+      return;
+    }
     try {
-      const newResumeUrl = await uploadResume(file, user.display_name);
+      const newResumeUrl = file ? await uploadResume(file, user.display_name) : user.resume;
       await updateProfile({
         name,
         title,
@@ -52,10 +59,6 @@ function EditProfile({ display_name }) {
         newResumeUrl,
         display_name,
       });
-      setName(name);
-      setTitle(title);
-      setGithub(github);
-      setLinkedin(linkedin);
       toast({
         title: "Success",
         description: "User profile updated successfully",
@@ -130,7 +133,7 @@ function EditProfile({ display_name }) {
           </form>
         </CardContent>
         <CardFooter className="flex justify-between mt-4">
-          <Button type="submit" onClick={handleSubmit}>
+          <Button type="button" onClick={handleSubmit}>
             Save Changes
           </Button>
         </CardFooter>
