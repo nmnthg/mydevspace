@@ -1,15 +1,15 @@
 'use client';
 import React from 'react'
 import { useUser } from '@/context/user.context';
-import EditProfile from '@/components/edit/edit_profile';
-import EditProjects from '@/components/edit/edit_projects';
+import EditProfile from '@/components/edit/edit-profile';
+import EditProjects from '@/components/edit/edit-projects';
 
 const EditPage = () => {
   const { user } = useUser()
   
 
   if (!user) {
-    return <div>Loading...</div>;
+    return <div>Login Required</div>;
   }
 
   

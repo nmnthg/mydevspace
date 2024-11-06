@@ -29,10 +29,6 @@ function EditProfile({ display_name }) {
       try {
         const user = await getUser(display_name);
         setUser(user);
-        setName(user.name);
-        setTitle(user.title);
-        setGithub(user.github);
-        setLinkedin(user.linkedin);
       } catch (error) {
         console.error(error.message);
       }
@@ -51,14 +47,15 @@ function EditProfile({ display_name }) {
     }
     try {
       const newResumeUrl = file ? await uploadResume(file, user.display_name) : user.resume;
-      await updateProfile({
-        name,
-        title,
-        github,
-        linkedin,
+      const newProfileData = {
+        name: name || user.name,
+        title: title || user.title,
+        github: github || user.github,
+        linkedin: linkedin || user.linkedin,
         newResumeUrl,
-        display_name,
-      });
+        display_name
+      }
+      await updateProfile(newProfileData);
       toast({
         title: "Success",
         description: "User profile updated successfully",
@@ -78,7 +75,7 @@ function EditProfile({ display_name }) {
           <CardDescription>Update your profile information</CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit} className="mt-6">
+          <form className="mt-6">
             <div className="grid w-full items-center gap-4">
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="name">Name</Label>
