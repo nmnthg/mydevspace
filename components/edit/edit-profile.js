@@ -69,8 +69,8 @@ function EditProfile({ display_name }) {
 
   return (
     <div className="container mx-auto mt-10 p-4">
-      <Card className="w-full">
-        <CardHeader>
+      <Card className="w-full ">
+        <CardHeader className="text-lg font-semibold">
           <CardTitle>Edit Profile</CardTitle>
           <CardDescription>Update your profile information</CardDescription>
         </CardHeader>

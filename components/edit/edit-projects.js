@@ -32,7 +32,7 @@ function EditProjects({ display_name }) {
 
   return (
     <div className="container mx-auto">
-      <h3 className="text-xl font-semibold">Projects</h3>
+      <h3 className="text-lg font-semibold">Projects</h3>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 mr-20">
         {projects.map((project) => (
           <Card key={project.name} className="bg-white shadow-lg rounded-lg">
@@ -46,7 +46,7 @@ function EditProjects({ display_name }) {
               />
             </CardHeader>
             <CardContent>
-              <CardTitle className="text-lg font-semibold">
+              <CardTitle className="text-md font-semibold">
                 {project.name}
               </CardTitle>
             </CardContent>

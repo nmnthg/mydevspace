@@ -4,8 +4,6 @@ import { useState, useEffect } from "react";
 import { updateProject, getProject, uploadProjectCover } from "@/lib/supabase";
 import {
   Card,
-  CardHeader,
-  CardTitle,
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
@@ -27,11 +25,6 @@ function EditProject({ projectId }) {
       try {
         const project = await getProject(projectId);
         setProject(project);
-        setName(project.name);
-        setDescription(project.description);
-        setUrl(project.url);
-        // Assuming project.preview is the initial preview image
-        // setFile(project.preview); // Uncomment if you want to set the file as well
       } catch (error) {
         console.error(error.message);
       }
@@ -57,11 +50,15 @@ function EditProject({ projectId }) {
         preview: newPreview,
         id: projectId
       }
+      console.log("Attempting to update project with", newProjectData);
       await updateProject(newProjectData);
       toast({
         title: "Success",
         description: "User profile updated successfully",
       });
+      setTimeout(() => {
+        window.location.href = `/${project.display_name}/edit`;
+      }, 1500);
     } catch (error) {
       console.log(error.message);
     }
@@ -73,18 +70,8 @@ function EditProject({ projectId }) {
     <div className="container mx-auto mt-10 p-4">
         {projectExists ? (
           <Card key={project.id} className="w-full mb-4">
-            <CardHeader>
-              <CardTitle>{project.name}</CardTitle>
-              <Image
-                  src={project.preview}
-                  alt={project.name}
-                  width={400}
-                  height={250}
-                  className="object-cover rounded-t-lg"
-                />
-            </CardHeader>
             <CardContent>
-              <form className="mt-6" onSubmit={handleSubmit}>
+              <form className="mt-6">
                 <div className="grid w-full items-center gap-4">
                   <div className="flex flex-col space-y-1.5">
                     <Label htmlFor={`name-${project.id}`}>Name</Label>
@@ -92,7 +79,7 @@ function EditProject({ projectId }) {
                       id={`name-${project.id}`}
                       type="text"
                       onChange={(e) => setName(e.target.value)}
-                      value={name}
+                      defaultValue={project.name}
                     />
                   </div>
                   <div className="flex flex-col space-y-1.5">
@@ -101,7 +88,7 @@ function EditProject({ projectId }) {
                       id={`description-${project.id}`}
                       type="text"
                       onChange={(e) => setDescription(e.target.value)}
-                      value={description}
+                      defaultValue={project.description}
                     />
                   </div>
                   <div className="flex flex-col space-y-1.5">
@@ -110,7 +97,7 @@ function EditProject({ projectId }) {
                       id={`url-${project.id}`}
                       type="url"
                       onChange={(e) => setUrl(e.target.value)}
-                      value={url}
+                      defaultValue={project.url}
                     />
                   </div>
                   <div className="flex flex-col space-y-1.5">
@@ -121,6 +108,15 @@ function EditProject({ projectId }) {
                       accept="image/png"
                       onChange={(e) => setFile(e.target.files[0])}
                     />
+                  </div>
+                  <div>
+                  <Image
+                  src={project.preview}
+                  alt={project.name}
+                  width={400}
+                  height={250}
+                  className="object-cover rounded-t-lg"
+                />
                   </div>
                 </div>
               </form>

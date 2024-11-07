@@ -2,7 +2,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 
-// Create the context
 const UserContext = createContext();
 
 // Custom hook to use the UserContext
@@ -12,8 +11,8 @@ export const useUser = () => {
 
 // Provider component
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(null);   // Stores the authenticated user
-  const [loading, setLoading] = useState(true); // Tracks loading state
+  const [user, setUser] = useState(null);   
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Subscribe to auth state changes
