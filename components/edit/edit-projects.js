@@ -9,6 +9,7 @@ import {
   CardTitle,
   CardContent,
   CardFooter,
+  CardDescription,
 } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import Link from "next/link";
@@ -16,7 +17,6 @@ import Image from "next/image";
 
 function EditProjects({ display_name }) {
   const [projects, setProjects] = useState([]);
-  const { toast } = useToast();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,33 +31,38 @@ function EditProjects({ display_name }) {
   }
 
   return (
-    <div className="container mx-auto">
-      <h3 className="text-lg font-semibold">Projects</h3>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 mr-20">
-        {projects.map((project) => (
-          <Card key={project.name} className="bg-white shadow-lg rounded-lg">
-            <CardHeader>
-              <Image
-                src={project.preview}
-                alt={project.name}
-                width={400}
-                height={250}
-                className="object-cover rounded-t-lg"
-              />
-            </CardHeader>
-            <CardContent>
-              <CardTitle className="text-md font-semibold">
-                {project.name}
-              </CardTitle>
-            </CardContent>
-            <CardFooter className="flex justify-between mt-4">
-              <Link href={`/${display_name}/edit/${project.id}`}>
-                <Button type="button">Edit</Button>
-              </Link>
-            </CardFooter>
-          </Card>
-        ))}
-      </div>
+    <div className="container mx-auto mt-10 p-4">
+      <Card className="w-full ">
+        <CardHeader className="text-lg font-semibold">
+          <CardTitle>Edit Projects</CardTitle>
+          <CardDescription>Update your projects</CardDescription>
+        </CardHeader>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 mr-20">
+          {projects.map((project) => (
+            <Card key={project.name} className="bg-white shadow-lg rounded-lg">
+              <CardHeader>
+                <Image
+                  src={project.preview}
+                  alt={project.name}
+                  width={400}
+                  height={250}
+                  className="object-cover rounded-t-lg h-64 w-full"
+                />
+              </CardHeader>
+              <CardContent>
+                <CardTitle className="text-md font-semibold">
+                  {project.name}
+                </CardTitle>
+              </CardContent>
+              <CardFooter className="flex justify-between mt-4">
+                <Link href={`/${display_name}/edit/${project.id}`}>
+                  <Button type="button">Edit</Button>
+                </Link>
+              </CardFooter>
+            </Card>
+          ))}
+        </div>
+      </Card>
     </div>
   );
 }

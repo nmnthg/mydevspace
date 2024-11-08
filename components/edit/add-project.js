@@ -1,0 +1,107 @@
+"use client";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { addProject } from "@/lib/supabase";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import Image from "next/image";
+import { useToast } from "@/hooks/use-toast";
+
+function AddProject(user) {
+  const [name, setName] = useState(null);
+  const [description, setDescription] = useState(null);
+  const [url, setUrl] = useState(null);
+  const [preview, setPreview] = useState(null);
+  const { toast } = useToast();
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    if (!name || !description || !url) {
+      toast({
+        title: "Error",
+        description: "Please fill in all required fields.",
+      });
+      return;
+    }
+
+    try {
+      const newProjectData = {
+        name,
+        description,
+        url,
+        preview,
+      };
+      console.log("Attempting to update project with", newProjectData);
+      await addProject(newProjectData);
+      toast({
+        title: "Success",
+        description: "User profile updated successfully",
+      });
+      //   setTimeout(() => {
+      //     window.location.href = `/${user.display_name}/edit`;
+      //   }, 1500);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  return (
+    <div className="container mx-auto mt-10 p-4">
+      <Card key="id" className="w-full mb-4">
+        <CardContent>
+          <form className="mt-6">
+            <div className="grid w-full items-center gap-4">
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="name">Name *</Label>
+                <Input
+                  id="name"
+                  type="text"
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="description">Description *</Label>
+                <Input
+                  id="description"
+                  type="text"
+                  onChange={(e) => setDescription(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="url">URL *</Label>
+                <Input
+                  id="url"
+                  type="url"
+                  onChange={(e) => setUrl(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="preview">Upload Preview Image</Label>
+                <Input
+                  id="preview"
+                  type="file"
+                  accept="image/png"
+                  onChange={(e) => setPreview(e.target.files[0])}
+                />
+              </div>
+            </div>
+          </form>
+        </CardContent>
+        <CardFooter className="flex justify-between mt-4">
+          <div>
+            <Button type="button" onClick={handleSubmit}>
+              Save Changes
+            </Button>
+          </div>
+        </CardFooter>
+      </Card>
+    </div>
+  );
+}
+
+export default AddProject;
