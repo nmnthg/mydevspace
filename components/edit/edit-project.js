@@ -63,14 +63,16 @@ function EditProject({ projectId }) {
   };
 
   const handleDeleteSubmit = async() => {
-    deleteProject(projectId);
-    toast({
-      title: "Success",
-      description: "Project deleted successfully",
-    });
-    setTimeout(() => {
-      window.location.href = `/${project.display_name}/edit`;
-    }, 1500);
+    if (window.confirm("Are you sure you want to delete this project?")) {
+      deleteProject(projectId);
+      toast({
+        title: "Success",
+        description: "Project deleted successfully",
+      });
+      setTimeout(() => {
+        window.location.href = `/${project.display_name}/edit`;
+      }, 1500);
+    }
   }
 
   const projectExists = project !== null;
