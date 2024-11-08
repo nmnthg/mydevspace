@@ -27,7 +27,7 @@ function Projects({ projects }) {
                 alt={project.name}
                 width={400}
                 height={250}
-                className="object-cover rounded-t-lg"
+                className="object-cover rounded-t-lg h-64 w-full"
               />
             </CardHeader>
             <CardContent>

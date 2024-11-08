@@ -11,7 +11,6 @@ import {
   CardFooter,
   CardDescription,
 } from "@/components/ui/card";
-import { useToast } from "@/hooks/use-toast";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -33,11 +32,16 @@ function EditProjects({ display_name }) {
   return (
     <div className="container mx-auto mt-10 p-4">
       <Card className="w-full ">
-        <CardHeader className="text-lg font-semibold">
-          <CardTitle>Edit Projects</CardTitle>
-          <CardDescription>Update your projects</CardDescription>
+        <CardHeader className="flex flex-row justify-between items-center text-lg font-semibold -mb-4">
+        <div>
+        <CardTitle>Edit Projects</CardTitle>
+        <CardDescription>Update your projects</CardDescription>
+        </div>  
+          <Button type="button" onClick={() => window.location.href = `/${display_name}/edit/add`}>
+            Add Project
+          </Button>
         </CardHeader>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 mr-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 m-6">
           {projects.map((project) => (
             <Card key={project.name} className="bg-white shadow-lg rounded-lg">
               <CardHeader>

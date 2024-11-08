@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
-import { updateProject, getProject, uploadProjectCover } from "@/lib/supabase";
+import { updateProject, getProject, uploadProjectCover, addProject, deleteProject} from "@/lib/supabase";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -28,12 +28,12 @@ function EditProject({ projectId }) {
     fetchData();
   }, [projectId]);
 
-  const handleSubmit = async (event) => {
+  const handleSaveSubmit = async (event) => {
     event.preventDefault();
     if (!project) {
       toast({
         title: "Error",
-        description: "User data is not available.",
+        description: "Project data is not available",
       });
       return;
     }
@@ -52,7 +52,7 @@ function EditProject({ projectId }) {
       await updateProject(newProjectData);
       toast({
         title: "Success",
-        description: "User profile updated successfully",
+        description: "Project updated successfully",
       });
       setTimeout(() => {
         window.location.href = `/${project.display_name}/edit`;
@@ -61,6 +61,17 @@ function EditProject({ projectId }) {
       console.log(error.message);
     }
   };
+
+  const handleDeleteSubmit = async() => {
+    deleteProject(projectId);
+    toast({
+      title: "Success",
+      description: "Project deleted successfully",
+    });
+    setTimeout(() => {
+      window.location.href = `/${project.display_name}/edit`;
+    }, 1500);
+  }
 
   const projectExists = project !== null;
 
@@ -125,7 +136,7 @@ function EditProject({ projectId }) {
           </CardContent>
           <CardFooter className="flex justify-between mt-4">
               <div>
-                <Button type="button" onClick={handleSubmit}>
+                <Button type="button" onClick={handleSaveSubmit}>
                   Save Changes
                 </Button>
               </div>
@@ -133,7 +144,7 @@ function EditProject({ projectId }) {
                 <Button
                   variant="destructive"
                   type="button"
-                  onClick={handleSubmit}
+                  onClick={handleDeleteSubmit}
                 >
                   Delete Project
                 </Button>

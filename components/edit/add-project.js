@@ -5,7 +5,6 @@ import { addProject } from "@/lib/supabase";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import Image from "next/image";
 import { useToast } from "@/hooks/use-toast";
 
 function AddProject(user) {
@@ -33,15 +32,15 @@ function AddProject(user) {
         url,
         preview,
       };
-      console.log("Attempting to update project with", newProjectData);
+      console.log("Attempting to create project with", newProjectData);
       await addProject(newProjectData);
       toast({
         title: "Success",
-        description: "User profile updated successfully",
+        description: "Project created successfully",
       });
-      //   setTimeout(() => {
-      //     window.location.href = `/${user.display_name}/edit`;
-      //   }, 1500);
+        setTimeout(() => {
+          window.location.href = `/${user.display_name}/edit`;
+        }, 1500);
     } catch (error) {
       console.log(error.message);
     }
