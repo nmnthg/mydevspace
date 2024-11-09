@@ -19,19 +19,17 @@ function Profile({ user }) {
       <h2 className="text-2xl mb-4">{user.title}</h2>
 
       {/* Links */}
-      <div className="space-x-4 mb-6">
+      <div className="flex flex-row space-x-4 mb-4">
       {user.github && (
         <Link href={user.github} passHref legacyBehavior>
-          <a target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
+          <a target="_blank" rel="noopener noreferrer" className="text-blue-600 font-bold no-underline flex items-center">
             GitHub
           </a>
         </Link>
       )}
       {user.linkedin && (
-        <Link href={user.linkedin} passHref legacyBehavior>
-          <a target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
+        <Link href={user.linkedin} className="text-blue-600 font-bold no-underline flex items-center">
             LinkedIn
-          </a>
         </Link>
       )}
       </div>
@@ -39,7 +37,6 @@ function Profile({ user }) {
        {/* Display Resume */}
        {user.resume && (
         <div className="resume-section">
-          <h3 className="text-xl font-semibold mb-2">Resume</h3>
           <div style={{ height: '300px', width: '400px', border: '1px solid #ddd', overflow: 'hidden' }}>
             <Worker workerUrl={`https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js`}>
               <Viewer

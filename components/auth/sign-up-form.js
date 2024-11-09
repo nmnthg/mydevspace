@@ -87,9 +87,7 @@ const SignUpForm = () => {
                             <Input id="confirmPassword" name="confirmPassword" type="password" value={confirmPassword} onChange={handleChange} required />
                         </div>
                     </div>
-                    <CardFooter className="flex justify-between mt-4">
-                        <Button type="submit">Sign Up</Button>
-                    </CardFooter>
+                    <div className="mt-6"><Button type="submit">Sign Up</Button></div>
                 </form>
             </CardContent>
         </Card>

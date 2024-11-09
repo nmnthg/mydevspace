@@ -17,10 +17,10 @@ function AddProject(user) {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!name || !description || !url) {
+    if (!name || !description || !url || !preview) {
       toast({
         title: "Error",
-        description: "Please fill in all required fields.",
+        description: "Please fill in all fields.",
       });
       return;
     }
@@ -47,13 +47,13 @@ function AddProject(user) {
   };
 
   return (
-    <div className="container mx-auto mt-10 p-4">
+    <div className="container mx-auto mt-10 p-4 max-w-4xl">
       <Card key="id" className="w-full mb-4">
         <CardContent>
           <form className="mt-6">
             <div className="grid w-full items-center gap-4">
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="name">Name *</Label>
+                <Label htmlFor="name">Name</Label>
                 <Input
                   id="name"
                   type="text"
@@ -62,21 +62,19 @@ function AddProject(user) {
                 />
               </div>
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="description">Description *</Label>
+                <Label htmlFor="description">Description</Label>
                 <Input
                   id="description"
                   type="text"
                   onChange={(e) => setDescription(e.target.value)}
-                  required
                 />
               </div>
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="url">URL *</Label>
+                <Label htmlFor="url">URL</Label>
                 <Input
                   id="url"
                   type="url"
                   onChange={(e) => setUrl(e.target.value)}
-                  required
                 />
               </div>
               <div className="flex flex-col space-y-1.5">

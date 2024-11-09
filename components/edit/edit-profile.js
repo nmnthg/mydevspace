@@ -68,7 +68,7 @@ function EditProfile({ display_name }) {
   const userExists = user !== null;
 
   return (
-    <div className="container mx-auto mt-10 p-4">
+    <div className="container mx-auto mt-10 p-4 max-w-4xl">
       <Card className="w-full ">
         <CardHeader className="texsm font-semibold">
           <CardTitle>Edit Profile</CardTitle>

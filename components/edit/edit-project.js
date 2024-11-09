@@ -78,7 +78,7 @@ function EditProject({ projectId }) {
   const projectExists = project !== null;
 
   return (
-    <div className="container mx-auto mt-10 p-4">
+    <div className="container mx-auto mt-10 p-4 max-w-4xl">
       {projectExists ? (
         <Card key={project.id} className="w-full mb-4">
           <CardContent>
