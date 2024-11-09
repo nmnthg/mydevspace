@@ -95,8 +95,7 @@ const SignInForm = () => {
               href="/auth/forgot-password"
               className="text-blue-600 text-sm no-underline flex items-center"
             >
-              {" "}
-              Forgot password
+              Forgot password?
             </Link>
           </div>
         </form>

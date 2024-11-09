@@ -1,14 +1,10 @@
-import React from 'react'
-import SignUpForm from '@/components/auth/sign-up-form'
-import SignInForm from '@/components/auth/sign-in-form'
+import React from "react";
+import ResetPasswordForm from "@/components/auth/reset-password-form";
 
 const PasswordResetPage = () => {
   return (
-    <div className='flex justify-center items-center min-h-screen gap-24'>
-      <SignInForm />
-      <SignUpForm />
-    </div>
-  )
-}
+       <ResetPasswordForm /> 
+  );
+};
 
-export default PasswordResetPage
+export default PasswordResetPage;
