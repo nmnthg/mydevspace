@@ -8,27 +8,17 @@ import { useToast } from "@/hooks/use-toast";
 import { sendResetPasswordEmail } from "@/lib/supabase";
 import Link from "next/link";
 
-const ResetPasswordForm = () => {
+const ForgotPasswordForm = () => {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const { toast } = useToast();
 
   const handlePasswordResetSubmit = async (event) => {
     event.preventDefault();
 
-    if (!password || !confirmPassword) {
+    if (!email) {
       toast({
         title: "Error",
-        description: "Please enter your password and confirm it",
-      });
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      toast({
-        title: "Error",
-        description: "Passwords do not match",
+        description: "Please enter your email",
       });
       return;
     }
@@ -37,11 +27,8 @@ const ResetPasswordForm = () => {
       await sendResetPasswordEmail(email);
       toast({
         title: "Success",
-        description: "Password has been reset",
+        description: "A password reset link will be sent to your email if it matches a user in the system.",
       });
-      setTimeout(() => {
-        window.location.href = "/auth";
-      }, 1500);
     } catch (error) {
       console.log(error.message);
       toast({
@@ -58,27 +45,24 @@ const ResetPasswordForm = () => {
           <form className="mt-6" onSubmit={handlePasswordResetSubmit}>
             <div className="grid w-full items-center gap-4">
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="password">Enter your new password</Label>
+                <Label htmlFor="email">Enter your email address</Label>
                 <Input
-                  id="password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-              <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="confirmPassword">Confirm your new password</Label>
-                <Input
-                  id="confirmPassword"
-                  type="password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
             </div>
             <div className="flex flex-row justify-between mt-6 px-2">
-              <Button type="submit">Reset Password</Button>
-            </div>
+            <Button type="submit">Reset Password</Button>
+            <Link
+              href="/auth"
+              className="text-blue-600 text-sm no-underline flex items-center"
+            >
+              Know your password?
+            </Link>
+          </div>
           </form>
         </CardContent>
       </Card>
@@ -86,4 +70,4 @@ const ResetPasswordForm = () => {
   );
 };
 
-export default ResetPasswordForm;
+export default ForgotPasswordForm;
