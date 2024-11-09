@@ -27,11 +27,11 @@ function Projects({ projects }) {
                 alt={project.name}
                 width={400}
                 height={250}
-                className="object-cover rounded-t-lg h-64 w-full"
+                className="object-cover rounded-sm h-64 w-full"
               />
             </CardHeader>
             <CardContent>
-              <CardTitle className="text-lg font-semibold">
+              <CardTitle className="texsm font-semibold">
                 {project.name}
               </CardTitle>
               <CardDescription className="mb-4 text-gray-600">

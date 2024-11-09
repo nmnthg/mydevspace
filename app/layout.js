@@ -1,12 +1,10 @@
 import "@/app/globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { UserProvider } from "@/context/user.context";
+import Head from 'next/head';
 
 export const metadata = {
   title: "MyDevSpace",
-  icons: {
-    icon: '@\public\logo.png'
-  }
 };
 
 export default function RootLayout({ children }) {
