@@ -27,7 +27,6 @@ const ResetPasswordForm = () => {
 
     if (password !== confirmPassword) {
       toast({
-        title: "Error",
         description: "Passwords do not match",
       });
       return;
