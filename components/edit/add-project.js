@@ -38,9 +38,9 @@ function AddProject(user) {
         title: "Success",
         description: "Project created successfully",
       });
-        setTimeout(() => {
-          window.location.href = `/${user.display_name}/edit`;
-        }, 1500);
+      setTimeout(() => {
+        window.location.href = `/${user.display_name}/edit`;
+      }, 1500);
     } catch (error) {
       console.log(error.message);
     }
