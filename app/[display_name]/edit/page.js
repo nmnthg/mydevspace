@@ -4,6 +4,8 @@ import { useUser } from '@/context/user.context';
 import EditProfile from '@/components/edit/edit-profile';
 import EditProjects from '@/components/edit/edit-projects';
 
+export const runtime = 'edge';
+
 const EditPage = () => {
   const { user } = useUser()
   

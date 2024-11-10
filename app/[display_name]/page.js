@@ -6,6 +6,8 @@ import { getUser, getProjects } from "@/lib/supabase";
 import Profile from "@/components/profile";
 import Projects from "@/components/projects";
 
+export const runtime = 'edge';
+
 function ProfilePage() {
   const params = useParams();
   const [user, setUser] = useState(null);

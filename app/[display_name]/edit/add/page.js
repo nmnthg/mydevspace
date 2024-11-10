@@ -3,6 +3,8 @@ import React from 'react'
 import { useUser } from '@/context/user.context';
 import AddProject from '@/components/edit/add-project';
 
+export const runtime = 'edge';
+
 const AddPage = () => {
   const { user } = useUser()
   

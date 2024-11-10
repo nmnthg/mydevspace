@@ -4,6 +4,8 @@ import { useParams } from "next/navigation";
 import { useUser } from "@/context/user.context";
 import EditProject from "@/components/edit/edit-project";
 
+export const runtime = 'edge';
+
 const EditProjectPage = () => {
   const params = useParams();
   const { user } = useUser()
