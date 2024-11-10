@@ -1,26 +1,27 @@
 'use client'
 import ResetPasswordForm from "@/components/auth/reset-password-form";
-import React from "react";
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useUser } from "@/context/user.context";
 import { useRouter } from 'next/navigation';
 
 const ResetPasswordPage = () => {
-  const { user } = useUser()
+  const { user, loading } = useUser();
   const router = useRouter(); 
 
   useEffect(() => {
+    if (loading) return;
+
     if (!user) {
       router.push('/auth');
     }
-  }, [user, router]);
+  }, [user, loading, router]);
 
-  if (!user) {
-    return null; 
+  if (loading) {
+    return <div>Loading...</div>;
   }
-  
+
   return (
-       <ResetPasswordForm/> 
+       <ResetPasswordForm user={user}/> 
   );
 };
 

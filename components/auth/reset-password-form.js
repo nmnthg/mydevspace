@@ -5,11 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { sendResetPasswordEmail } from "@/lib/supabase";
-import Link from "next/link";
+import { resetPassword } from "@/lib/supabase";
 
-const ResetPasswordForm = () => {
-  const [email, setEmail] = useState("");
+const ResetPasswordForm = ({ user }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const { toast } = useToast();
@@ -33,13 +31,13 @@ const ResetPasswordForm = () => {
     }
 
     try {
-      await sendResetPasswordEmail(email);
+      await resetPassword(password);
       toast({
         title: "Success",
         description: "Password has been reset",
       });
       setTimeout(() => {
-        window.location.href = "/auth";
+        window.location.href = `/${user.user_metadata.display_name}`;
       }, 1500);
     } catch (error) {
       console.log(error.message);

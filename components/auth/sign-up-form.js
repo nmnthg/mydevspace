@@ -41,10 +41,9 @@ const SignUpForm = () => {
             });
             
             if (signUpData.user?.user_metadata?.display_name) {
-                router.push(`/${signUpData.user.user_metadata.display_name}`);
+                router.push(`/${signUpData.user.user_metadata.display_name}/edit`);
             } else {
-                // Fallback if display_name is not available
-                router.push('/dashboard');
+                throw new Error("Display name not available");
             }
 
         } catch (error) {

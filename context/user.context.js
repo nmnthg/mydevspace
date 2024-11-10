@@ -31,6 +31,13 @@ export const UserProvider = ({ children }) => {
         setLoading(false);              // Update loading state if needed
       }
 
+      // Handle password recovery event
+      else if (event === 'PASSWORD_RECOVERY') {
+        console.log(event)
+        setUser(session?.user ?? null); // Set user if session is valid
+        setLoading(false);              // End loading
+      }
+
       // Handle sign-out event
       else if (event === 'SIGNED_OUT') {
         setUser(null);                  // Clear the user when signed out
@@ -43,7 +50,6 @@ export const UserProvider = ({ children }) => {
       authListener?.subscription.unsubscribe();
     };
   }, []);
-
 
   return (
     <UserContext.Provider value={{ user, loading }}>
