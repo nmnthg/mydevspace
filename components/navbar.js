@@ -39,6 +39,14 @@ export default function Navbar() {
           </Button>
         )}
 
+        {user && isEditPage && (
+          <Button asChild variant="outline">
+            <Link href={`/${user.user_metadata.display_name}`}>
+              Porfolio
+            </Link>
+          </Button>
+        )}
+
         {user ? (
           <Button variant="outline" onClick={signOut}>
             Sign Out

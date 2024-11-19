@@ -28,16 +28,20 @@ function Profile({ user }) {
       <div className="flex flex-row space-x-4 mb-4">
         {user.github && (
           <Link
-            href={user.github}
+            href={user.github.startsWith('http') ? user.github : `https://${user.github}`}
             className="text-blue-600 font-bold no-underline flex items-center"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             GitHub
           </Link>
         )}
         {user.linkedin && (
           <Link
-            href={user.linkedin}
+            href={user.linkedin.startsWith('http') ? user.linkedin : `https://${user.linkedin}`}
             className="text-blue-600 font-bold no-underline flex items-center"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             LinkedIn
           </Link>

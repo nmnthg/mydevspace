@@ -38,8 +38,10 @@ function Projects({ projects }) {
                 {project.description}
               </CardDescription>
               <Link
-                href={project.url}
+                href={project.url.startsWith('http') ? project.url : `https://${project.url}`}
                 className="text-blue-600 hover:underline"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 Visit Project
               </Link>
