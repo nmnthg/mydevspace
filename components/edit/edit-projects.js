@@ -26,18 +26,41 @@ function EditProjects({ display_name }) {
   }, []);
 
   if (!projects || projects.length === 0) {
-    return <div>No projects available</div>;
+    return (
+      <div className="container mx-auto mt-10 p-4">
+        <Card className="w-full ">
+          <CardHeader className="flex flex-row justify-between items-center text-sm font-semibold">
+            <div>
+              <CardTitle>No Projects Available</CardTitle>
+            </div>
+            <div>
+              <Button
+                type="button"
+                onClick={() =>
+                  (window.location.href = `/${display_name}/edit/add`)
+                }
+              >
+                Add Project
+              </Button>
+            </div>
+          </CardHeader>
+        </Card>
+      </div>
+    );
   }
 
   return (
     <div className="container mx-auto mt-10 p-4">
       <Card className="w-full ">
-        <CardHeader className="flex flex-row justify-between items-center texsm font-semibold -mb-4">
-        <div>
-        <CardTitle>Edit Projects</CardTitle>
-        <CardDescription>Update your projects</CardDescription>
-        </div>  
-          <Button type="button" onClick={() => window.location.href = `/${display_name}/edit/add`}>
+        <CardHeader className="flex flex-row justify-between items-center text-sm font-semibold -mb-4">
+          <div>
+            <CardTitle>Edit Projects</CardTitle>
+            <CardDescription>Update your projects</CardDescription>
+          </div>
+          <Button
+            type="button"
+            onClick={() => (window.location.href = `/${display_name}/edit/add`)}
+          >
             Add Project
           </Button>
         </CardHeader>

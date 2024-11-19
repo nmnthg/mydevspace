@@ -15,7 +15,7 @@ const AddPage = () => {
   
   return (
     <div>
-      <AddProject user={user}/>
+      <AddProject display_name={user.user_metadata.display_name}/>
     </div>
   )
 }

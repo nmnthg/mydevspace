@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 
-function AddProject(user) {
+function AddProject({display_name}) {
   const [name, setName] = useState(null);
   const [description, setDescription] = useState(null);
   const [url, setUrl] = useState(null);
@@ -30,6 +30,7 @@ function AddProject(user) {
         name,
         description,
         url,
+        display_name,
         preview,
       };
       console.log("Attempting to create project with", newProjectData);
@@ -39,7 +40,7 @@ function AddProject(user) {
         description: "Project created successfully",
       });
       setTimeout(() => {
-        window.location.href = `/${user.display_name}/edit`;
+        window.location.href = `/${display_name}/edit`;
       }, 1500);
     } catch (error) {
       console.log(error.message);
