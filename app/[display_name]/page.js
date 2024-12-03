@@ -31,11 +31,11 @@ function ProfilePage() {
   }, [params.display_name]);
 
   return (
-    <div className="grid grid-cols-3 gap-4 items-center justify-items-center">
-      <div className="col-span-1">
+    <div className="grid 2xl:grid-cols-3 gap-4 items-center justify-items-center">
+      <div className="2xl:col-span-1">
         <Profile user={user} />
       </div>
-      <div className="col-span-2">
+      <div className="2xl:col-span-2">
         <Projects projects={projects} />
       </div>
     </div>
